@@ -1,0 +1,64 @@
+class TicTacToe():
+    def __init__(self, player_one_id, player_two_id):
+        self.GRID_SIZE = 3
+
+        #[
+        #   [0, 0, 0],
+        #   [0, 0, 0],
+        #   [0, 0, 0],
+        #]
+
+        self.grid = [[0 for row in range(self.GRID_SIZE)]
+                     for i in range(self.GRID_SIZE)]
+        self.player_one = player_one_id
+        self.player_two = player_two_id
+
+        self.coordinates = {}
+        self.temp_i = 1
+
+        for i in range(self.GRID_SIZE):
+            for j in range(self.GRID_SIZE):
+                self.coordinates[f"{self.temp_i}"] = [i, j]
+                self.temp_i += 1
+
+        self.winner_found = False
+
+    def check_win(self):
+        # check rows
+        if not self.winner_found:
+            for row in self.grid:
+                if row.count(1) == len(row) or row.count(-1) == len(row):
+                    self.winner_found = True
+                    return row[0]  # returns the value of winner (either 1 or -1)
+
+            # check columns
+            for i in range(self.GRID_SIZE):
+                temp_col = []
+                for j in range(self.GRID_SIZE):
+                    temp_col.append(self.grid[j][i])
+                if row.count(1) == len(row) or row.count(-1) == len(row):
+                    self.winner_found = True
+                    return self.grid[i][0]
+                    # returns the value of winner (either 1 or -1)
+
+            # checks diagonals
+            if (self.grid[1][1] == self.grid[0][0] == self.grid[2][2]) or (
+                    self.grid[1][1] == self.grid[0][2] == self.grid[2][0]):
+                self.winner_found = True
+                return self.grid[1][1]
+                # returns the middle cell, which is also the winner
+
+        return 0
+
+    def player_input(self, symbol, cell):
+        if not self.winner_found:
+            # print(self.coordinates[cell][0], self.coordinates[cell][1])
+            self.grid[self.coordinates[cell][0]][self.coordinates[cell][1]] = symbol
+            print(self.check_win())
+
+    # testing functions
+    def check_coords(self):
+        print(self.coordinates)
+
+    def print_grid(self):
+        print(self.grid)
