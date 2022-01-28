@@ -10,6 +10,7 @@ class TicTacToe():
 
         self.grid = [[0 for row in range(self.GRID_SIZE)]
                      for i in range(self.GRID_SIZE)]
+                     
         self.player_one = player_one_id
         self.player_two = player_two_id
 
@@ -24,8 +25,8 @@ class TicTacToe():
         self.winner_found = False
 
     def check_win(self):
-        # check rows
         if not self.winner_found:
+            # check rows
             for row in self.grid:
                 if row.count(1) == len(row) or row.count(-1) == len(row):
                     self.winner_found = True
@@ -33,10 +34,10 @@ class TicTacToe():
 
             # check columns
             for i in range(self.GRID_SIZE):
-                temp_col = []
-                for j in range(self.GRID_SIZE):
-                    temp_col.append(self.grid[j][i])
-                if row.count(1) == len(row) or row.count(-1) == len(row):
+                temp_col = [self.grid[j][i] for j in range(self.GRID_SIZE)]
+                # for j in range(self.GRID_SIZE):
+                #     temp_col.append(self.grid[j][i])
+                if temp_col.count(1) == len(row) or temp_col.count(-1) == len(row):
                     self.winner_found = True
                     return self.grid[i][0]
                     # returns the value of winner (either 1 or -1)
