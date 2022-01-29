@@ -51,7 +51,7 @@ class TicTacToe():
 
         return 0
 
-    def player_input(self, symbol, cell):
+    def make_turn(self, symbol, cell):
         if not self.winner_found:
             # print(self.coordinates[cell][0], self.coordinates[cell][1])
             self.grid[self.coordinates[cell][0]][self.coordinates[cell][1]] = symbol

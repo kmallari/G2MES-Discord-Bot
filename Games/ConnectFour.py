@@ -19,14 +19,11 @@ class ConnectFour():
 
     def check_win(self):
 
-        #  IMPROVE LOGIC TO BASE THE CHECK OFF OF THE LAST MOVE
-        # MADE TO MAKE THE CHECK SPEED FASTER
-        
         # check rows
         for row in range(self.ROW):
             left = 0
-            right = self.COL - 4 + 1
-            for cell in range(self.COL - 4 + 1):
+            right = self.COL - 3
+            for cell in range(self.COL - 3):
                 # print(self.grid[row][left:right])
                 if self.grid[row][left:right].count(
                         1) == 4 or self.grid[row][left:right].count(-1) == 4:
@@ -35,18 +32,51 @@ class ConnectFour():
                 right += 1
                 left += 1
 
-        #check columns
-        for row in range(self.ROW - 4 + 1):
+        # check columns
+        for row in range(self.ROW - 3):
             for cell in range(self.COL):
                 temp = [
                     self.grid[row + i][cell] for i in range(4)
                     if self.grid[row][cell] != 0
                 ]
+                # print(temp)
                 if temp.count(1) == 4 or temp.count(-1) == 4:
                     print("COL WIN")
                     return temp[0]
 
+        # check diagonals
+        # top left to bottom right
+        for row in range(self.ROW - 3):
+            # temp = []
+            for cell in range(self.COL - 3):
+                temp = [
+                    self.grid[row + i][cell + i] for i in range(4)
+                    if self.grid[row][cell] != 0
+                ]
+                # print(temp)
+                if temp.count(1) == 4 or temp.count(-1) == 4:
+                    print("TL->BR WIN")
+                    return temp[0]
+
+        # check top right to bottom left
+        for row in range(self.ROW - 3):
+            for cell in range(3, self.COL):
+                temp = [
+                    self.grid[row + i][cell - i] for i in range(4)
+                    if self.grid[row][cell] != 0
+                ]
+                # print(temp)
+                if temp.count(1) == 4 or temp.count(-1) == 4:
+                    print("TR->BL WIN")
+                    return temp[0]
+
         return 0
+
+    def make_turn(self, symbol, column):
+        if column < self.COL:
+            for row in range(self.ROW):
+                if row == self.ROW-1 or (self.grid[row+1][column] != 0 and self.grid[row][column] == 0):
+                    self.grid[row][column] = symbol
 
     # testing functitons
     def info(self):
