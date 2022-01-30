@@ -28,3 +28,4 @@ game.grid = [   [0, 0, 0, 0, 0, 0, 0],
 
 # game.info()
 
+test = "🅾"

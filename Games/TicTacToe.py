@@ -1,5 +1,5 @@
 class TicTacToe():
-    def __init__(self, player_one_id, player_two_id):
+    def __init__(self):
         self.GRID_SIZE = 3
 
         #[
@@ -11,11 +11,13 @@ class TicTacToe():
         self.grid = [[0 for row in range(self.GRID_SIZE)]
                      for i in range(self.GRID_SIZE)]
                      
-        self.player_one = player_one_id
-        self.player_two = player_two_id
+        # self.player_one = player_one_id
+        # self.player_two = player_two_id
 
         self.coordinates = {}
         self.temp_i = 1
+
+        self.current_turn = 1
 
         for i in range(self.GRID_SIZE):
             for j in range(self.GRID_SIZE):
@@ -52,10 +54,14 @@ class TicTacToe():
         return 0
 
     def make_turn(self, symbol, cell):
-        if not self.winner_found:
+        if not self.winner_found and self.current_turn == symbol:
             # print(self.coordinates[cell][0], self.coordinates[cell][1])
             self.grid[self.coordinates[cell][0]][self.coordinates[cell][1]] = symbol
             print(self.check_win())
+            self.current_turn *= -1
+            return True
+        elif self.current_turn != symbol:
+            return False
 
     # testing functions
     def check_coords(self):
@@ -63,3 +69,4 @@ class TicTacToe():
 
     def print_grid(self):
         print(self.grid)
+        

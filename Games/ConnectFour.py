@@ -2,10 +2,20 @@ class ConnectFour():
     def __init__(self, player_one_id, player_two_id):
         self.ROW = 6
         self.COL = 7
+
+        # game.grid = [   [0, 0, 0, 0, 0, 0, 0],
+        #                 [0, 0, 0, 0, 0, 0, 0],
+        #                 [0, 0, 0, 0, 0, 0, 0],
+        #                 [0, 0, 0, 0, 0, 0, 0],
+        #                 [0, 0, 0, 0, 0, 0, 0],
+        #                 [0, 0, 0, 0, 0, 0, 0]   ]
+
         self.grid = [[0 for row in range(self.COL)] for i in range(self.ROW)]
 
         self.player_one = player_one_id
         self.player_two = player_two_id
+
+        self.previous_turn = -1
 
         self.coordinates = {}
         self.temp_i = 1
