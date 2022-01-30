@@ -6,6 +6,9 @@
 #         * Obstruction (https://www.artofmanliness.com/living/games-tricks/5-pencil-and-paper-games-that-arent-tic-tac-toe/)
 #         * UNO (?)
 
+#  TO FIX
+# CHECK IF TTT DRAW WORKS, IF A SQUARE HAS BEEN TAKEN, IT CANNOT BE CHANGED FOR TTT
+
 PREFIX = "+"
 
 from discord.ext import commands
@@ -212,7 +215,7 @@ Type the command ``+ttt <number>`` with the number being the square you want to 
         game = rooms[channel_name]["ongoing_game"]
         player_symbol = rooms[channel_name]["players"][str(ctx.author.id)]["symbol"]
         make_turn = game.make_turn(player_symbol, msg)
-        if make_turn:
+        if make_turn == True:
             rooms[channel_name]["turn"] *= -1
             await ctx.channel.send(ttt_board(game))
             if game.check_win() == 1 or game.check_win() == -1:
@@ -221,8 +224,10 @@ Type the command ``+ttt <number>`` with the number being the square you want to 
             elif game.check_win() == "draw":
                 await ctx.channel.send(f"It's a draw!")
                 rooms[channel_name]["ongoing_game"] = ""
-        else:
+        elif make_turn == False:
             await ctx.channel.send("It is not your turn!")
+        elif make_turn == "taken":
+            await ctx.channel.send("Someone has already chosen that square!")
 
 
 # // --------------- //
