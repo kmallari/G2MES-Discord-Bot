@@ -1,16 +1,17 @@
-class TicTacToe():
+class TicTacToe:
     def __init__(self):
         self.GRID_SIZE = 3
 
-        #[
+        # [
         #   [0, 0, 0],
         #   [0, 0, 0],
         #   [0, 0, 0],
-        #]
+        # ]
 
-        self.grid = [[0 for row in range(self.GRID_SIZE)]
-                     for i in range(self.GRID_SIZE)]
-                     
+        self.grid = [
+            [0 for row in range(self.GRID_SIZE)] for i in range(self.GRID_SIZE)
+        ]
+
         # self.player_one = player_one_id
         # self.player_two = player_two_id
 
@@ -48,7 +49,8 @@ class TicTacToe():
 
             # checks diagonals
             if (self.grid[1][1] == self.grid[0][0] == self.grid[2][2] != 0) or (
-                    self.grid[1][1] == self.grid[0][2] == self.grid[2][0] != 0):
+                self.grid[1][1] == self.grid[0][2] == self.grid[2][0] != 0
+            ):
                 self.winner_found = True
                 return int(self.grid[1][1])
                 # returns the middle cell, which is also the winner
@@ -63,7 +65,7 @@ class TicTacToe():
                     break
             if num_of_zeros == 0:
                 return "draw"
-            
+
         return 0
 
     def make_turn(self, symbol, cell):
@@ -84,4 +86,3 @@ class TicTacToe():
 
     def print_grid(self):
         print(self.grid)
-        
