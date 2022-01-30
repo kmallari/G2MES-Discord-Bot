@@ -32,6 +32,8 @@ class TicTacToe():
             for row in self.grid:
                 if row.count(1) == len(row) or row.count(-1) == len(row):
                     self.winner_found = True
+                    if self.winner_found:
+                        print("WINNER FOUND ROW")
                     return row[0]  # returns the value of winner (either 1 or -1)
 
             # check columns
@@ -41,23 +43,37 @@ class TicTacToe():
                 #     temp_col.append(self.grid[j][i])
                 if temp_col.count(1) == len(row) or temp_col.count(-1) == len(row):
                     self.winner_found = True
+                    if self.winner_found:
+                        print("WINNER FOUND CVOL")
                     return self.grid[i][0]
                     # returns the value of winner (either 1 or -1)
 
             # checks diagonals
-            if (self.grid[1][1] == self.grid[0][0] == self.grid[2][2]) or (
-                    self.grid[1][1] == self.grid[0][2] == self.grid[2][0]):
+            if (self.grid[1][1] == self.grid[0][0] == self.grid[2][2] != 0) or (
+                    self.grid[1][1] == self.grid[0][2] == self.grid[2][0] != 0):
                 self.winner_found = True
-                return self.grid[1][1]
+                if self.winner_found:
+                    print("WINNER FOUND DIAG")
+                print("self.grid[1][1]", self.grid[1][1])
+                return int(self.grid[1][1])
                 # returns the middle cell, which is also the winner
 
+            # check for draw
+            num_of_zeros = 0
+            for row in self.grid:
+                for cell in row:
+                    num_of_zeros += cell
+
+            if num_of_zeros == 0:
+                return 10
+            
         return 0
 
     def make_turn(self, symbol, cell):
-        if not self.winner_found and self.current_turn == symbol:
-            # print(self.coordinates[cell][0], self.coordinates[cell][1])
+        symbol = int(symbol)
+        print("self.winner_found", self.winner_found)
+        if not self.winner_found and self.current_turn == int(symbol):
             self.grid[self.coordinates[cell][0]][self.coordinates[cell][1]] = symbol
-            print(self.check_win())
             self.current_turn *= -1
             return True
         elif self.current_turn != symbol:

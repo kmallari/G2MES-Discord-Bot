@@ -181,8 +181,8 @@ async def ttt(ctx, msg):
             game = rooms[channel_name]["ongoing_game"]
 
             room_players = list(rooms[channel_name]["players"].keys())
-            print(room_players)
-            print(rooms[channel_name]["players"][str(room_players[0])])
+            # print(room_players)
+            # print(rooms[channel_name]["players"][str(room_players[0])])
 
             p1_symbol = random.choice([1, -1])
             p2_symbol = p1_symbol * -1
@@ -211,10 +211,16 @@ Type the command ``+ttt <number>`` with the number being the square you want to 
     elif int(msg) >= 1 and int(msg) <= 9:
         game = rooms[channel_name]["ongoing_game"]
         player_symbol = rooms[channel_name]["players"][str(ctx.author.id)]["symbol"]
-        print(player_symbol)
-        if game.make_turn(player_symbol, msg):
-            await ctx.channel.send(ttt_board(game))
+        make_turn = game.make_turn(player_symbol, msg)
+        if make_turn:
             rooms[channel_name]["turn"] *= -1
+            await ctx.channel.send(ttt_board(game))
+            if game.check_win() == 1 or game.check_win() == -1:
+                await ctx.channel.send(f"<@{ctx.author.id}> wins!")
+                rooms[channel_name]["ongoing_game"] = ""
+            elif game.check_win() == "draw":
+                await ctx.channel.send(f"It's a draw!")
+                rooms[channel_name]["ongoing_game"] = ""
         else:
             await ctx.channel.send("It is not your turn!")
 
@@ -278,5 +284,10 @@ async def del_rooms(ctx):
         await channel.delete()
 
     print("Deleted game rooms.")
+
+@bot.command()
+async def game_info(ctx):
+    channel_name = ctx.message.channel.name
+    print(rooms[channel_name]["ongoing_game"].__dict__)
 
 bot.run(os.getenv('TOKEN'))

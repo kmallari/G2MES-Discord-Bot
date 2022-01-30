@@ -28,4 +28,7 @@ game.grid = [   [0, 0, 0, 0, 0, 0, 0],
 
 # game.info()
 
-test = "🅾"
+test = [1 , 1, 1, 0]
+
+if (test[0] == test[1] == test[2] != 1):
+    print("TEST")
