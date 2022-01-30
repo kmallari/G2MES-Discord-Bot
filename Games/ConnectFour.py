@@ -94,13 +94,15 @@ class ConnectFour:
             # ADD CODE TO CHECK IF COL IS FULL
             if column < self.COL:
                 for row in range(self.ROW):
+                    if row == 0 and self.grid[row][column] != 0:
+                        return "full"
                     if row == self.ROW - 1 or (
                         self.grid[row + 1][column] != 0 and self.grid[row][column] == 0
                     ):
                         self.grid[row][column] = symbol
                         break
                 self.current_turn *= -1
-            print(self.grid)
+            # print(self.grid)
             return True
         elif self.current_turn != symbol:
             return False

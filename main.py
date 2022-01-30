@@ -22,6 +22,7 @@ import random
 import string
 from Games.TicTacToe import TicTacToe
 from Games.ConnectFour import ConnectFour
+from keep_alive import keep_alive
 
 # bot and client startup
 client = discord.Client()
@@ -111,7 +112,7 @@ def c4_board(game):
 async def on_ready():
     print(f"Logged in as {bot.user}")
     await bot.change_presence(
-        status=discord.Status.online, activity=discord.Game(name="GAME5")
+        status=discord.Status.online, activity=discord.Game(name="G2MES")
     )
 
 
@@ -133,7 +134,7 @@ Type the command ``{PREFIX}a`` to accept the challenge, or ``{PREFIX}r`` to reje
 async def a(ctx):
     # checks if author has been challenged
     if ctx.author in challenger_dict.keys():
-        category_name = "GAME5 Rooms"
+        category_name = "G2MES Rooms"
         # await ctx.send("Setting up management!")
         category = discord.utils.get(ctx.guild.categories, name=category_name)
         user = ctx.author
@@ -232,7 +233,7 @@ Type the command ``+ttt <number>`` with the number being the square you want to 
             # game_grid = ttt_board(rooms[channel_name]["ongoing_game"])
             await ctx.channel.send(ttt_board(game))
         else:
-            await ctx.channel.send("You are not in a GAME5 Room!")
+            await ctx.channel.send("You are not in a G2MES Room!")
 
     elif int(msg) >= 1 and int(msg) <= 9:
         game = rooms[channel_name]["ongoing_game"]
@@ -287,7 +288,7 @@ Type the command ``+c4 <number>`` with the number being the square you want to d
 
             await ctx.channel.send(c4_board(game))
         else:
-            await ctx.channel.send("You are not in a GAME5 Room!")
+            await ctx.channel.send("You are not in a G2MES Room!")
 
     elif int(msg) >= 1 and int(msg) <= 7:
         game = rooms[channel_name]["ongoing_game"]
@@ -375,4 +376,5 @@ async def game_info(ctx):
     print(rooms[channel_name]["ongoing_game"].__dict__)
 
 
+keep_alive()
 bot.run(os.getenv("TOKEN"))
